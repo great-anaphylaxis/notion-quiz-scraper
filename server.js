@@ -63,8 +63,7 @@ async function getDatabase(callback) {
     }
 
     const items = formatData(pages)
-
-    console.log(items);
+    
     callback(items);
 }
 
