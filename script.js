@@ -1,4 +1,5 @@
 const container = document.getElementById("list");
+let dataString = "";
 
 function getData() {
     fetch("/data").then(response => response.json()).then(response => onDataReceived(response));
@@ -9,9 +10,13 @@ function onDataReceived(data) {
     container.innerHTML = "";
 
     for (const key of data) {
-        console.log(key)
+        console.log(key);
+        
+        dataString += `${key.question}[[${key.answer}]]`;
         createItem(key.question, key.answer);
     }
+
+    container.insertBefore(createItem("Formatted text", dataString), container.firstChild);
 }
 
 function createItem(question, answer) {
@@ -28,6 +33,8 @@ function createItem(question, answer) {
     details.appendChild(p);
     
     container.appendChild(details);
+
+    return details;
 }
 
 getData();

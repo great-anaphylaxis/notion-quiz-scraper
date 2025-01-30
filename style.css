@@ -1,10 +1,16 @@
-#list {
+body {
     background-color: lightgreen;
-    padding: 1em;
 }
 
 .item {
     background-color: skyblue;
-    padding: 0.5em;
     margin: 0.25em;
+}
+
+.item > summary {
+    padding: 0.5em;
+}
+
+.item > p {
+    margin: 0 0.5em;
 }
