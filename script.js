@@ -1,4 +1,7 @@
 const container = document.getElementById("list");
+const items = [];
+
+let index = -1;
 let dataString = "";
 
 function getData() {
@@ -16,7 +19,7 @@ function onDataReceived(data) {
         createItem(key.question, key.answer);
     }
 
-    container.insertBefore(createItem("Formatted text", dataString), container.firstChild);
+    createItem("Formatted text", dataString)
 }
 
 function createItem(question, answer) {
@@ -34,8 +37,46 @@ function createItem(question, answer) {
     
     container.appendChild(details);
 
+    items.push(details);
     return details;
 }
+
+function updateItemIndex(num) {
+    console.log(num)
+    if (index != -1) {
+        items[index].classList.remove("selected");
+    }
+
+    index = num;
+
+    items[index].classList.add("selected");
+}
+
+addEventListener("keydown", e => {
+    if (e.key == "ArrowUp") {
+        if (index == -1 || index == 0) {
+            updateItemIndex(items.length - 1);
+        }
+
+        else {
+            updateItemIndex(index - 1);
+        }
+    }
+
+    if (e.key == "ArrowDown") {
+        const num = index + 1;
+
+        if (num > items.length - 1) {
+            updateItemIndex(0)
+        }
+
+        else {
+            updateItemIndex(num);
+        }
+
+        
+    }
+})
 
 getData();
 

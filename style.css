@@ -14,3 +14,7 @@ body {
 .item > p {
     margin: 0 0.5em;
 }
+
+.selected {
+    background-color: orange;
+}
