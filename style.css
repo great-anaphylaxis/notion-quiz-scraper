@@ -18,3 +18,7 @@ body {
 .selected {
     background-color: orange;
 }
+
+h1, h3 {
+    margin: 0;
+}

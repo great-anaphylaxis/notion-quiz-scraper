@@ -42,9 +42,9 @@ function createItem(question, answer) {
 }
 
 function updateItemIndex(num) {
-    console.log(num)
     if (index != -1) {
         items[index].classList.remove("selected");
+        items[index].open = false;
     }
 
     index = num;
@@ -78,7 +78,7 @@ addEventListener("keydown", e => {
     if (e.key == "Enter") {
         const item = items[index];
 
-        console.log(item.open, item)
+        item.open = !item.open;
     }
 })
 
