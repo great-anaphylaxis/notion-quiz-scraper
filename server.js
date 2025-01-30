@@ -8,26 +8,48 @@ const notion = new Client({ auth: process.env.NOTION_KEY });
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
 const databaseId = '18049dfa184480a0b021c04ff6726c72';
-
-let pages = [];
+const delimiter1 = "[[";
+const delimiter2 = "]]";
 
 async function markdown(page_id) {
     const mdblocks = await n2m.pageToMarkdown(page_id);
-    const mdString = n2m.toMarkdownString(mdblocks);
     
-    return mdString;
+    return mdblocks;
 }
 
 function formatData(pages) {
-    
+    const items = [];
+
+    for (const page of pages) {
+        for (const block of page) {
+            if (block.type !== 'toggle') {
+                continue;
+            }
+
+            if (block.parent === 'Resources') {
+                continue;
+            }
+
+            let lines = [];
+            for (const line of block.children) {
+                lines.push(line.parent);
+            }
+
+            const content = lines.join('\n');
+
+            items.push(`${block.parent}${delimiter1}${content}${delimiter2}`);
+        }
+    }
+
+    return items;
 }
 
 async function getDatabase(callback) {
+    const pages = [];
     const response = await notion.databases.query({ database_id: databaseId });
     
     for (let i = 0; i < response.results.length; i++) {
         const id = response.results[i].id;
-        //const page = await notion.blocks.children.list({ block_id: id });
 
         const page = await markdown(id)
         
@@ -35,10 +57,10 @@ async function getDatabase(callback) {
 
     }
 
-    formatData(pages)
+    const items = formatData(pages)
 
-    console.log(pages);
-    callback();
+    console.log(items);
+    callback(items);
 }
 
 
@@ -49,8 +71,8 @@ async function getDatabase(callback) {
 app.use(express.static("public"));
 
 app.get("/", function(request, response) {
-    getDatabase(() => {
-        response.send(pages);
+    getDatabase((items) => {
+        response.send(items);
     });
 });
 
