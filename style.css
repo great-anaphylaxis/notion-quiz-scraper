@@ -1,9 +1,11 @@
 body {
-    background-color: lightgreen;
+    min-height: 97vh;
+    background: linear-gradient(rgb(25, 30, 30), rgb(7, 15, 15));
+    color: white;
 }
 
 .item {
-    background-color: skyblue;
+    background-color: rgb(40, 70, 40);
     margin: 0.25em;
 }
 
@@ -16,9 +18,14 @@ body {
 }
 
 .selected {
-    background-color: orange;
+    background-color: rgb(50, 225, 50);
+    color: darkblue;
 }
 
-h1, h3 {
+h1, h5 {
     margin: 0;
+}
+
+hr {
+    margin: 1em 0em;
 }

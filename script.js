@@ -50,6 +50,9 @@ function updateItemIndex(num) {
     index = num;
 
     items[index].classList.add("selected");
+    items[index].scrollIntoView({
+        block: 'center'
+    });
 }
 
 addEventListener("keydown", e => {
