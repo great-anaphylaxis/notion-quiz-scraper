@@ -76,7 +76,15 @@ async function getDatabase(callback) {
 app.use(express.static("public"));
 
 app.get("/", function(request, response) {
-    response.sendFile(path.join(__dirname, "/index.html"));
+    response.sendFile(__dirname + "/index.html");
+});
+
+app.get("/script.js", function(request, response) {
+    response.sendFile(__dirname + "/script.js");
+});
+
+app.get("/script.js", function(request, response) {
+    response.sendFile(__dirname + "/script.js");
 });
 
 app.get('/data', function(request, response) {
