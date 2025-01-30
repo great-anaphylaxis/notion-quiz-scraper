@@ -37,7 +37,12 @@ function formatData(pages) {
 
             const content = lines.join('\n');
 
-            items.push(`${block.parent}${delimiter1}${content}${delimiter2}`);
+            items.push({
+                question: block.parent,
+                answer: content
+            });
+
+            //items.push(`${block.parent}${delimiter1}${content}${delimiter2}`);
         }
     }
 
@@ -71,10 +76,14 @@ async function getDatabase(callback) {
 app.use(express.static("public"));
 
 app.get("/", function(request, response) {
+    response.sendFile(path.join(__dirname, "/index.html"));
+});
+
+app.get('/data', function(request, response) {
     getDatabase((items) => {
         response.send(items);
     });
-});
+})
 
 const listener = app.listen(process.env.PORT, function() {
     console.log("Your app is listening on port " + listener.address().port);
