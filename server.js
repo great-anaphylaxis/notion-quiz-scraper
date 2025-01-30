@@ -8,8 +8,6 @@ const notion = new Client({ auth: process.env.NOTION_KEY });
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
 const databaseId = '18049dfa184480a0b021c04ff6726c72';
-const delimiter1 = "[[";
-const delimiter2 = "]]";
 
 async function markdown(page_id) {
     const mdblocks = await n2m.pageToMarkdown(page_id);
@@ -41,8 +39,6 @@ function formatData(pages) {
                 question: block.parent,
                 answer: content
             });
-
-            //items.push(`${block.parent}${delimiter1}${content}${delimiter2}`);
         }
     }
 
@@ -63,7 +59,7 @@ async function getDatabase(callback) {
     }
 
     const items = formatData(pages)
-    
+
     callback(items);
 }
 

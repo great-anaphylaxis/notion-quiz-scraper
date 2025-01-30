@@ -4,5 +4,7 @@
 }
 
 .item {
-    background-color: lightblue;
+    background-color: skyblue;
+    padding: 0.5em;
+    margin: 0.25em;
 }
