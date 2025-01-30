@@ -73,8 +73,12 @@ addEventListener("keydown", e => {
         else {
             updateItemIndex(num);
         }
+    }
 
-        
+    if (e.key == "Enter") {
+        const item = items[index];
+
+        console.log(item.open, item)
     }
 })
 
