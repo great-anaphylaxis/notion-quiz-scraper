@@ -6,7 +6,7 @@ let dataString = "";
 
 function getData() {
     fetch("/data").then(response => response.json()).then(response => onDataReceived(response));
-    container.innerText = "Loading... Wait for 10s (estimated)";
+    container.innerText = "Loading... Wait for 2mins (estimated)";
 }
 
 function onDataReceived(data) {
@@ -15,7 +15,7 @@ function onDataReceived(data) {
     for (const key of data) {
         console.log(key);
         
-        dataString += `${key.question}[[${key.answer}]]`;
+        dataString += `${key.question}©${key.answer}®`;
         createItem(key.question, key.answer);
     }
 
@@ -51,12 +51,14 @@ function updateItemIndex(num) {
 
     items[index].classList.add("selected");
     items[index].scrollIntoView({
-        block: 'center'
+        block: 'center',
+        behavior: 'smooth',
     });
 }
 
 addEventListener("keydown", e => {
     if (e.key == "ArrowUp") {
+        e.preventDefault();
         if (index == -1 || index == 0) {
             updateItemIndex(items.length - 1);
         }
@@ -67,6 +69,8 @@ addEventListener("keydown", e => {
     }
 
     if (e.key == "ArrowDown") {
+        e.preventDefault();
+
         const num = index + 1;
 
         if (num > items.length - 1) {
@@ -79,6 +83,8 @@ addEventListener("keydown", e => {
     }
 
     if (e.key == "Enter") {
+        e.preventDefault();
+        
         const item = items[index];
 
         item.open = !item.open;
